@@ -28,13 +28,17 @@
   color: #61dafb;
 }
 
-#hex-1-2:hover {
+/* #hex-1-2:hover {
   fill: hsl(60, 10%, 95%);
   stroke:"black"
-}  
+} */
 
-text:hover {
-  font-size: 500%;
+/* .sheep {
+  background-image: url("./hex-full.svg");
+} */
+
+text {
+  font-size: 200%;
 }
 
 @keyframes App-logo-spin {
