@@ -37,8 +37,16 @@
   background-image: url("./hex-full.svg");
 } */
 
+polygon:hover {
+  stroke-width: 3;
+}
+
 text {
   font-size: 200%;
+}
+
+#sea {
+  background-color: lightblue;
 }
 
 @keyframes App-logo-spin {

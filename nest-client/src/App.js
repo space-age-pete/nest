@@ -9,6 +9,7 @@ function App() {
   let [tileList, setTileList] = useState(["lightgreen", "lightgreen", "lightgreen", "lightgreen", "green", "green", "green", "green", "yellow", "yellow", "yellow", "yellow", "grey", "grey", "grey", "red", "red", "red", "tan"]);
   let [selectedTile, setSelectedTile] = useState(null);
   let [numberList, setNumberList] = useState([2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12]);
+  let [selectedNumber, setSelectedNumber] = useState(null);
 
   console.log(HexBackSVG)
 
@@ -23,10 +24,16 @@ function App() {
     ["red", "orange", "yellow"],
   ]
 
+  //shuffle should shuffle color/number into grid, not at time of render?
+
   let shuffle = (b) => {
     if(selectedTile){
       selectedTile.setAttribute("stroke-width", 1);
       setSelectedTile(null);
+    }
+    if(selectedNumber){
+      selectedNumber.setAttribute("style", "font-size:200%");
+      setSelectedNumber(null);
     }
     tile = 0;
     let a = [...b]
@@ -41,6 +48,10 @@ function App() {
     if(selectedTile){
       selectedTile.setAttribute("stroke-width", 1);
       setSelectedTile(null);
+    }
+    if(selectedNumber){
+      selectedNumber.setAttribute("style", "font-size:200%");
+      setSelectedNumber(null);
     }
     number = 0;
     let a = [...b]
@@ -68,6 +79,28 @@ function App() {
     }
   }
 
+  //make optional rules
+  //make function for deselecting tiles/numbers
+  //fix desert bugs: make swap3 that only works for deserts?
+
+  let swap2 = event => {
+    let clickedOn = event.target;
+    if(!selectedNumber){
+      // clickedOn.setAttribute("stroke", "black");
+      clickedOn.setAttribute("style", "font-size:300%")
+      
+      setSelectedNumber(clickedOn);
+    } else {
+      let textTemp = selectedNumber.textContent
+      console.log(textTemp)
+      selectedNumber.textContent = clickedOn.textContent;
+      clickedOn.textContent = textTemp;
+      //selectedTile.removeAttribute("stroke");
+      selectedNumber.setAttribute("style", "font-size:200%");
+      setSelectedNumber(null);
+    }
+  }
+
   return (
     // <div className="App">
     //   <header className="App-header">
@@ -85,11 +118,11 @@ function App() {
     //     </a>
     //   </header>
     // </div>
-   <div> 
+   <div id="sea"> 
      <button onClick={_=>shuffle(tileList)}>Shuffle Tiles</button>
      <button onClick={_=>shuffle2(numberList)}>Shuffle Numbers</button>
-     <img src={sheepHex} className="App-logo" alt="logo" />
-     <svg viewBox="-110 -200 3150 1200" xmlns="http://www.w3.org/2000/svg">
+     {/* <img src={sheepHex} className="App-logo" alt="logo" /> */}
+     <svg viewBox="-110 -200 2150 1200" xmlns="http://www.w3.org/2000/svg">
       <g> 
         {/* <polygon onMouseEnter={color} onMouseLeave={uncolor} points="100,0 50,-87 -50,-87 -100,-0 -50,87 50,87" fill="purple" stroke="black" />
        <g transform="translate(0,179)"> <polygon  onMouseEnter={color} onMouseLeave={uncolor} points="100,0 50,-87 -50,-87 -100,-0 -50,87 50,87" fill="purple" stroke="black" /></g> */}
@@ -106,7 +139,7 @@ function App() {
               onClick={swap}
               />
             {/* <text>{index}, {i}</text> */}
-            <text>{tileList[tile - 1] === "tan" ? "D" : numberList[number++]}</text>
+            <text onClick={swap2}>{tileList[tile - 1] === "tan" ? "D" : numberList[number++]}</text>
         </g>)
       ))
     }
